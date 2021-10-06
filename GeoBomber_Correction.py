@@ -11,8 +11,8 @@ del file_contents[0]
 
 countries = {}
 
-for line_country in file_contents:
-    fields = line_country.split(';')
+for country_line in file_contents:
+    fields = country_line.split(';')
     countries[fields[0]] = fields[-1].rstrip('\n')
 
 #print("Bienvenue démineur. Quel est ton nom? ", end='')
