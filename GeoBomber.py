@@ -58,7 +58,6 @@ while choice != 'n':
         print()
         print("Quel câble veux-tu couper? ", end='')
         fil = input()
-
         if fil in ['1', '2', '3', '4', '5']:
             if fil == '1':
                 if bomb[0][1] != countries[bomb[0][0]]:
