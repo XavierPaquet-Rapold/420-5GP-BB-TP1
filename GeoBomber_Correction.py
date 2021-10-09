@@ -8,7 +8,7 @@ from pathlib import Path
 def main():
     with open(os.path.join(os.getcwd(), 'liste-197-etats-2020.csv')) as country_file:
         file_content = country_file.readlines()
-
+    #supprimer la première ligne, car ce sont les titres de chaque colonne
     del file_content[0]
 
     countries = {}
