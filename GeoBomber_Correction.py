@@ -7,13 +7,13 @@ from pathlib import Path
 
 def main():
     with open(os.path.join(os.getcwd(), 'liste-197-etats-2020.csv')) as country_file:
-        file_contents = country_file.readlines()
+        file_content = country_file.readlines()
 
-    del file_contents[0]
+    del file_content[0]
 
     countries = {}
 
-    for country_line in file_contents:
+    for country_line in file_content:
         fields = country_line.split(';')
         country = fields[0]
         capital = fields[-1]
