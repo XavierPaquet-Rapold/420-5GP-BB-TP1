@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 
-country_file = open(os.path.join(os.getcwd(), 'liste-197-etats-2020.csv'))
+country_file = open(os.path.join(os.getcwd(), 'liste-197-etats-2020.csv'), encoding="Latin1")
 file_contents = country_file.readlines()
 
 del file_contents[0]

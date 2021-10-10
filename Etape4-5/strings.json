@@ -1,0 +1,4 @@
+{
+    "ask_name" : {"fr":"Bienvenue démineur. Quel est ton nom? ", "en": "Welcome deminer. What is your name? "},
+    "error_name": {"fr": "Veuillez entrer un nom alphanumérique", "en": "Please enter an alphanumeric name"}
+}
