@@ -1,4 +1,5 @@
 {
     "ask_name" : {"fr":"Bienvenue démineur. Quel est ton nom? ", "en": "Welcome deminer. What is your name? "},
-    "error_name": {"fr": "Veuillez entrer un nom alphanumérique", "en": "Please enter an alphanumeric name"}
+    "error_name": {"fr": "Veuillez entrer un nom alphanumérique", "en": "Please enter an alphanumeric name"},
+    "error_country_parsing": {"fr": "Erreur d'analyse du fichier de pays", "en": "Error parsing the country file"}
 }
