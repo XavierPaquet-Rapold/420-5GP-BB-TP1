@@ -25,6 +25,27 @@ def __create_wires(bad_associations: List, nb_wire: int, country_wrapper: countr
     wires.append(country_wrapper.create_bomb())
   return wires
 
+def __show_wires(wires: list, user_query_tool: tools) -> None:
+  """Montre la liste de cables, coupés ou pas"""
+  for wire_index,wire in enumerate(wires):
+    user_query_tool.show_wire(wire, wire_index + 1)
+
+def __update_wires(wires: list, cut_wire_index: int) -> bool:
+  """Coupe le cable s'il n'est pas déjà coupé, et retourne si le cable était un bombe ou pas"""
+  wire = wires[cut_wire_index]
+  if not wire.is_cutted:
+    wire.cut_cable()
+    return wire.is_bomb
+  return False
+
+def __check_wires(wires: list) -> bool:
+  """Retourne si toutes les mauvaises associations on été coupées"""
+  for wire in wires:
+    if not (wire.is_cutted and wire.is_bomb):
+      return False
+  return True
+
+
 
 def main() -> int:
   """Logique d'affaire du jeu GeoBomber"""
@@ -46,8 +67,18 @@ def main() -> int:
   except:
     user_query_tool.error_country_parsing()
     return 1
+
   bad_associations = __create_index_bad_associations(NB_WIRE, MIN_BOMB, MAX_BOMB)
   wires = __create_wires(bad_associations, NB_WIRE, country_wrapper)
+
+  round_won = False
+  round_lost = False
+  while not (round_lost or round_won):
+    __show_wires(wires, user_query_tool)
+    cut_wire_index = user_query_tool.ask_wire_choice() - 1
+    round_lost = __update_wires(wires, cut_wire_index)
+    round_won = __check_wires(wires)
+  user_query_tool.show_round_end(round_won)
 
 if __name__ == "__main__":
   try:

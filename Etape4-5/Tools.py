@@ -16,6 +16,7 @@ class tools:
     while True:
       name = input(self.strings['ask_name'][self.language])
       if name.isalpha():
+        print(f'{name}{self.strings["start_game"][self.language]}')
         return name
       else:
         print(self.strings['error_name'][self.language])
@@ -33,3 +34,24 @@ class tools:
         return language
       else:
         print("Merci d'entrer 'fr' ou 'en' | Please enter 'en' or 'fr'")
+
+  def ask_wire_choice(self) -> int:
+    """Demander l'index du cable qui va etre coupé"""
+    while True:
+      try:
+        cut_wire_index = int(input(self.strings['ask_wire_choice'][self.language]))
+        if cut_wire_index in list(range(1,6)):
+          return cut_wire_index 
+      except:
+        print(self.strings['error_wire_choice'][self.language])
+
+  def show_wire(self, wire, wire_index: int) -> None:
+    print(f'[ {wire_index}] {wire}')
+
+  def show_round_end(self, round_won : bool,) -> None:
+    if round_won:
+      print(f'{self.strings["round_won"][self.language]}')
+    else:
+      print("*** BOOM! ***")
+
+

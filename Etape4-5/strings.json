@@ -1,5 +1,9 @@
 {
     "ask_name" : {"fr":"Bienvenue démineur. Quel est ton nom? ", "en": "Welcome deminer. What is your name? "},
     "error_name": {"fr": "Veuillez entrer un nom alphanumérique", "en": "Please enter an alphanumeric name"},
-    "error_country_parsing": {"fr": "Erreur d'analyse du fichier de pays", "en": "Error parsing the country file"}
+    "start_game": {"fr": ", quel nom ridicule pour un démineur! Enfin, allons-y même...", "en": ", what a dumb name for deminer! Well, let's just go with it ..."},
+    "error_country_parsing": {"fr": "Erreur d'analyse du fichier de pays", "en": "Error parsing the country file"},
+    "ask_wire_choice" : {"fr": "Quel cable voulez-vous couper?(Nombre entre 1 et 5) : ", "en": "Which wire do you wanna cut?(Number between 1 and 5) : "},
+    "error_wire_choice": {"fr": "Veuillez entrer un nombre", "en": "Please enter a number"},
+    "round_won": {"fr": "OMG!!! Bombre désamorcée. Bravo!", "en": "OMG!!! Bombre defused. Well done!"}
 }
