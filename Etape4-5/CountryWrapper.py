@@ -57,4 +57,4 @@ class countryWrapper:
   def recreate_country_list(self) -> None:
     """Remet les pays ayant été enlevés dans le dictionnaire de pays"""
     self.countries.update(self.removed_countries)
-    self.countries = {}
+    self.removed_countries = {}
