@@ -1,91 +1,121 @@
-# Geo Bomber - version à corriger
+# Geo Bomber - version corrigée
 
 import random
 import os
 from pathlib import Path
 
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'liste-197-etats-2020.csv'), 'r', encoding='Latin-1') as country_file:
+    file_content = country_file.readlines()
 
-def main():
-    with open(os.path.join(os.getcwd(), 'liste-197-etats-2020.csv')) as country_file:
-        file_content = country_file.readlines()
-    #supprimer la première ligne, car ce sont les titres de chaque colonne
-    del file_content[0]
+#supprimer la première ligne, car ce sont les titres de chaque colonne
+del file_content[0]
 
-    countries = {}
+countries = {}
 
-    for country_line in file_content:
-        fields = country_line.split(';')
-        country = fields[0]
-        capital = fields[-1]
-        countries[country] = capital.rstrip('\n')
+for country_line in file_content:
+    fields = country_line.split(';')
+    country = fields[0]
+    capital = fields[-1]
+    countries[country] = capital.rstrip('\n')
 
-    name = input("Bienvenue démineur. Quel est ton nom? ")
+name = input("Bienvenue démineur. Quel est ton nom? ")
 
-    print(f"{name}, quel nom ridicule pour un dénomineur! Enfin, allons-y quand même...")
+print(f"{name}, quel nom ridicule pour un dénomineur! Enfin, allons-y quand même...")
 
-    retry_game = ""
-    while retry_game != 'n':
+round_status = 0
+while round_status != 'n':
 
-        number_of_bomb = random.randint(1, 4)    # nombre de bombes
+    nb_bad_associations = random.randint(1, 4)    # nombre de bombes
 
-        bomb = [[" " for _ in range(2)] for _ in range(5)]
-        for i in range(len(bomb)):
-            bomb[i][0], bomb[i][1] = random.choice(list(countries.items()))
+    bomb = [[" " for _ in range(2)] for _ in range(5)]
+    for i in range(5):
+        bomb[i][0], bomb[i][1] = random.choice(list(countries.items()))
 
-        # Sélection des bons fils
-        wire_good_selection = []
-        for i in range(number_of_bomb):
+    # Sélection des bons fils
+    index_bad_associations = []
+    for _ in range(nb_bad_associations):
+        index = random.randint(0, 4)
+        while index in index_bad_associations:
             index = random.randint(0, 4)
-            while index in wire_good_selection:
-                index = random.randint(0, 4)
-            wire_good_selection.append(index)
+        index_bad_associations.append(index)
 
-             #s'assurer que le pays a une autre capital que la tienne
-            random_choice = random.choice(list(countries.values()))
-            while random_choice != bomb[i][1]:
-                bomb[i][1] = random_choice
+    for i in index_bad_associations:
+        country_capital_mismatch = True
+        while country_capital_mismatch:
+            capital = random.choice(list(countries.values()))
+            if capital != bomb[i][1]:
+                bomb[i][1] = capital
+                country_capital_mismatch = False
+
+    print(f"Voici une bombe pour toi, {name}...")
+
+    wire_cut = []
+
+    game_status = 0
+    nb_wire_cut = 0
+    while not game_status:
+
+        for i in range(5):
+            if i in wire_cut:
+                print(f"[{i + 1:2d}] {bomb[i][0]} ~~/ /~~ {bomb[i][1]}")
             else:
-                random_choice = random.choice(list(countries.values()))
-            
-        print(f"Voici une bombe pour toi, {name}...")
+                print(f"[{i + 1:2d}] {bomb[i][0]} ~~~~~~~ {bomb[i][1]}")
 
-        wire_cutted = []
-        end_game_lose = False
-        end_game_win = False
-        cutted_wire = 0
-        while not end_game_lose and not end_game_win:
-
-            for i in range(len(bomb)):
-                if i in wire_cutted:
-                    print(f"[{i + 1:2d}] {bomb[i][0]} ~~/ /~~ {bomb[i][1]}")
+        print()
+        print("Quel câble veux-tu couper? ", end='')
+        wire = input()
+        if wire in ['1', '2', '3', '4', '5']:
+            if wire == '1':
+                if bomb[0][1] != countries[bomb[0][0]]:
+                    game_status = 1
+                    if 0 not in wire_cut:
+                        nb_wire_cut += 1
+                    wire_cut.append(0)
                 else:
-                    print(f"[{i + 1:2d}] {bomb[i][0]} ~~~~~~~ {bomb[i][1]}")
+                    game_status = 3
+            if wire == '2':
+                if bomb[1][1] != countries[bomb[1][0]]:
+                    game_status = 1
+                    if 1 not in wire_cut:
+                        nb_wire_cut += 1
+                    wire_cut.append(1)
+                else:
+                    game_status = 3
+            if wire == '3':
+                if bomb[2][1] != countries[bomb[2][0]]:
+                    game_status = 1
+                    if 2 not in wire_cut:
+                        nb_wire_cut += 1
+                    wire_cut.append(2)
+                else:
+                    game_status = 3
+            if wire == '4':
+                if bomb[3][1] != countries[bomb[3][0]]:
+                    game_status = 1
+                    if 3 not in wire_cut:
+                        nb_wire_cut += 1
+                    wire_cut.append(3)
+                else:
+                    game_status = 3
+            if wire == '5':
+                if bomb[4][1] != countries[bomb[4][0]]:
+                    game_status = 1
+                    if 4 not in wire_cut:
+                        nb_wire_cut += 1
+                    wire_cut.append(4)
+                else:
+                    game_status = 3
 
-            wire = input('\n' + "Quel câble veux-tu couper? ")
-            
-            if wire in ['1', '2', '3', '4', '5']:
-                for i in range(len(bomb)):
-                    if int(wire) == i + 1 :
-                        if bomb[i][1] != countries[bomb[i][0]]:
-                            end_game_lose = False
-                            cutted_wire += 1
-                            wire_cutted.append(i)
-                        else:
-                            end_game_lose = True
+            if game_status == 1 and nb_wire_cut == nb_bad_associations:
+                game_status = 2
 
-                if end_game_lose == False and cutted_wire == number_of_bomb:
-                    end_game_win = True
+            game_status = game_status - 1
 
-            else : 
-                print("ce fil n'existe pas...")
+    if game_status == 2:
+        print("*** BOOM! ***")
+    else:
+        print(f"OMG!!! Bombe désamorçée. Bravo {name}!")
 
-        if end_game_lose:
-            print("*** BOOM! ***")
-        elif end_game_win:
-            print(f"OMG!!! Bombe désamorçée. Bravo {name}!")
-
-        while retry_game != 'y' and retry_game != 'n':
-            retry_game = input("Voulez-vous rejouer? (y/n)")
-
-if __name__ == "__main__":
-    main()
+    while round_status != 'y' and round_status != 'n':
+        print(f"Voulez-vous rejouer? (y/n)", end=' ')
+        round_status = input()

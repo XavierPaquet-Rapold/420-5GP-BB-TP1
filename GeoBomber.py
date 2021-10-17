@@ -32,7 +32,7 @@ while choice != 'n':
 
     # Sélection des bons fils
     indexes = []
-    for i in range(nb):
+    for _ in range(nb):
         index = random.randint(0, 4)
         while index in indexes:
             index = random.randint(0, 4)

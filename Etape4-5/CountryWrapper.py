@@ -6,11 +6,13 @@ from Wire import wire
 
 class countryWrapper:
   """Wrapper qui contient la façon de parser les fichiers et créer les files"""
-  COUNTRY_FILE_ENGLISH = 'national_capitals.csv'
-  COUNTRY_FILE_FRENCH = 'liste-197-etats-2020.csv'
+  COUNTRY_FILE_ENGLISH = 'public/national_capitals.csv'
+  COUNTRY_FILE_FRENCH = 'public/liste-197-etats-2020.csv'
 
   def __init__(self, language: str, dir_path: str) -> None:
     """Constructeur"""
+    if language != 'fr' and language != 'en':
+      raise Exception('Language not supported')
     self.countries = None
     self.language = language
     self.removed_countries = {}
@@ -22,7 +24,7 @@ class countryWrapper:
     file = self.COUNTRY_FILE_ENGLISH if self.language == "en" else self.COUNTRY_FILE_FRENCH
     with open(os.path.join(dir_path, file), 'r', encoding="Latin1") as country_file:
         file_content = country_file.readlines()
-    #supprimer la première ligne en français, car ce sont les titres de chaque colonne
+    #supprimer la première ligne, car ce sont les titres de chaque colonne
     del file_content[0]
     return file_content
 
@@ -42,7 +44,7 @@ class countryWrapper:
       country = random.choice(list(self.countries.items()))
       self.removed_countries[country[0]] = country[1]
       country_capital.append(country)
-    self.countries.pop(country[0])
+      self.countries.pop(country[0])
     country = country_capital[0][0]
     bad_capital = country_capital[1][1]
     return wire(country, bad_capital, False)
