@@ -1,4 +1,5 @@
 import json
+import sys
 import os
 
 
@@ -9,7 +10,7 @@ class tools:
     if language != 'fr' and language != 'en':
       raise Exception('Language not supported')
     self.language = language
-    with open(os.path.join(dir_path, 'public/strings.json'), 'r') as strings_file:
+    with open(os.path.join(dir_path, 'public/strings.json'), 'r', encoding='utf-8') as strings_file:
       self.strings = json.load(strings_file)
 
   @staticmethod
